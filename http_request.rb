@@ -1,22 +1,22 @@
 class HttpRequest 
-  def initialize(request_string)
-    @data = request_string.split(' ')
+  def initialize(rack_environment_object)
+    @data = rack_environment_object
   end
-  
+
   def to_h
     {method: verb, request_uri: path, http_version: http_version}
   end
 
   def verb
-    @data[0]
+    @data['REQUEST_METHOD']
   end
 
   def path
-    @data[1]
+    @data['PATH_INFO']
   end
 
   def http_version
-    @data[2]
+    @data['SERVER_PROTOCOL']
   end
 
   alias :method :verb
