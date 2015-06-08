@@ -6,10 +6,6 @@ class Http_Response
     @version, @headers, @status_code, @body = version, headers, status_code, body
   end
 
-  def to_s
-    puts "#{version} #{status_code} #{reason_phrase} \n #{content_type} \n \n #{body} \n "
-  end
-
   def to_a
     [@status_code, @headers, @body]
   end

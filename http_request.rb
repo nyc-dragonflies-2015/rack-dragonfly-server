@@ -1,10 +1,6 @@
-class HttpRequest 
+class HttpRequest
   def initialize(rack_environment_object)
     @data = rack_environment_object
-  end
-
-  def to_h
-    {method: verb, request_uri: path, http_version: http_version}
   end
 
   def verb

@@ -1,32 +1,32 @@
 class HTTPRequestProceesor
-  def get(request)
-    if request.path == '/'
-      contents = File.open("index.html").readlines
-      Http_Response.new(contents)
+  PATHS = {
+    '/' => "index.html"
+  }
+
+  def initialize(request)
+    @request = request
+  end
+
+  def get
+    if PATHS.keys.include?(path=@request.path)
+      contents = File.open(PATHS[path]).readlines
+      Http_Response.new(contents).to_a
+    else
+      error(404, "Not found :(")
     end
   end
 
   def post
+    puts "TODO: Do some POST-y stuff here..."
   end
-  
-  def error
+
+  def process_request
+    error unless @request.method == "GET" || @request.method == "POST"
+    send @request.method.downcase.to_sym
   end
-  
-  def receive(request)
-    if request.protocol = "HTTP"
-      process_request(request)
-    end
-  end
-    
-  def process_request(request)
-    case request.method
-    when "GET"
-      get(request)
-    when "POST"
-      post(request)
-    else
-      error(request)
-    end
+
+  def error(error_number=500, error_message="We messed up on the server" )
+    [error_number, { "Content-Type" => 'text/plain' }, Array(error_message)]
   end
 end
 
