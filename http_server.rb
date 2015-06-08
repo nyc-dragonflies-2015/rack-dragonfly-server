@@ -1,7 +1,7 @@
 class HTTPRequestProceesor
   def get(request)
     if request.path == '/'
-      contents = File.open("index.html").readlines.join('')
+      contents = File.open("index.html").readlines
       Http_Response.new(contents)
     end
   end
